@@ -1,4 +1,3 @@
-
 .DS_Store
 
 .metadata/*
@@ -10,3 +9,7 @@ HomeMultimedia/.settings/*
 HomeMultimedia/.classpath
 
 HomeMultimedia/.project
+
+HomeMultimedia/WebContent/WEB-INF/*
+
+HomeMultimedia/META-INF/*
