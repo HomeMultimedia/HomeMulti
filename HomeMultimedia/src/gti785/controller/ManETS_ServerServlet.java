@@ -1,9 +1,8 @@
 package gti785.controller;
 
+import gti785.command.CommandFactory;
 import gti785.command.ExecuteCommand;
 import gti785.command.MediaCommand;
-import gti785.command.MediaCommandPlay;
-import gti785.command.MediaCommandPlaylistAdd;
 import gti785.model.MediaFolder;
 import gti785.param.Const;
 import gti785.push.Push;
@@ -65,18 +64,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		else if(command != null && command.equals("play")){
 			String id = null;
 			id = request.getParameter("option");
-			
-			toDo = new MediaCommandPlay(remote, id);
-			
-			/*if(PlayMedia.execute()){
-				
-				XMLprinter.printAfterPlay(""+id, response);
-				response.setStatus(HttpServletResponse.SC_OK);
-			}
-			else{
-				error = true;
-				errorMessage = "Play : Error while trying to play song.";
-			}*/
+			toDo = CommandFactory.getInstance().getMediaCommandPlay(remote, id);
 		}
 		
 		//pause song
@@ -95,42 +83,14 @@ public class ManETS_ServerServlet extends HttpServlet {
 		else if(command != null && command.equals("playlistadd")){
 			String idSong = null;
 			idSong = request.getParameter("option");
-			
-			toDo = new MediaCommandPlaylistAdd(remote, idSong);
-			/*if( idSong != null ){
-				if(remote.playListAdd(Integer.parseInt(idSong)))
-					XMLprinter.printPlaylist(remote.getPlaylist(),response);
-				else{
-					error = true;
-					errorMessage = "Play list add: Song does not exist";
-				}
-			}
-			else{
-				error = true;
-				errorMessage = "Play list add: no option";
-			}*/
-			
+			toDo = CommandFactory.getInstance().getMediaCommandPlaylistAdd(remote, idSong);
 		}
 		
 		//remove song from playlist
 		else if(command != null && command.equals("playlistremove")){
 			String idPlaylist = null;
 			idPlaylist = request.getParameter("option");
-			if( idPlaylist != null ){
-				if(remote.playListRemove(Integer.parseInt(idPlaylist))){
-					
-				}
-					//XMLprinter.printPlaylist(remote.getPlaylist(),response);
-				else{
-					error = true;
-					errorMessage = "Play list remove: Song does not exist";
-				}
-				
-			}else{
-				error = true;
-				errorMessage = "Play list remove: no option";
-			}
-			
+			toDo = CommandFactory.getInstance().getMediaCommandPlaylistRemove(remote, idPlaylist);
 		}
 		
 		//play next song
@@ -158,18 +118,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		else if(command != null && command.equals("repeat")){
 			String mode = null;
 			mode = request.getParameter("option");
-			if( mode != null){
-				if(remote.repeat(mode))
-					System.out.println("repeat mode: "+mode);
-				else{
-					error = true;
-					errorMessage = "Repeat mode: repeat mode does not exist";
-				}
-			}
-			else{
-				error = true;
-				errorMessage = "Repeat mode: no option";
-			}
+			toDo = CommandFactory.getInstance().getMediaCommandRepeat(remote, mode);
 		}
 		
 		//print play list songs
@@ -179,21 +128,13 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//get information on current song
 		else if(command != null && command.equals("poll")){
-			int songPlayListID = remote.getCurrentSongPlaylistID();
-			response.getWriter().write("current song: " + songPlayListID);
+			toDo = CommandFactory.getInstance().getMediaCommandPoll(remote, null);
 		}
 		
 		//set volume
 		else if(command != null && command.equals("volume")){
 			String volume = request.getParameter("option");
-			if( volume != null){
-				remote.changeVolume(Integer.parseInt(volume));
-				System.out.println("volume: "+volume);
-			}
-			else{
-				error = true;
-				errorMessage = "Volume: no option";
-			}
+			toDo = CommandFactory.getInstance().getMediaCommandVolume(remote,volume);
 		}
 		
 		//get information on current song
@@ -238,9 +179,6 @@ public class ManETS_ServerServlet extends HttpServlet {
 		}
 	}
 	
-	public void printResponse(HttpServletResponse response) {
-		
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

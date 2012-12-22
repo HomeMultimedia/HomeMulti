@@ -1,7 +1,5 @@
 package gti785.command;
 
-import javax.servlet.http.HttpServletResponse;
-
 import gti785.remote.ETSRemote;
 
 public class MediaCommandPlay implements MediaCommand {
