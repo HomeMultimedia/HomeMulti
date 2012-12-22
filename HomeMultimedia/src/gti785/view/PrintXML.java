@@ -69,15 +69,13 @@ private static final XStream xstream = new XStream(new DomDriver());
 		}
 	}
 	
-	public String printAfterPlay(String id, HttpServletResponse response) {
-		try {				
-			PrintWriter out = response.getWriter();
-			gti785.model.List l = new gti785.model.List(id);
-			out.write(xstream.toXML(l));
-			out.write(id);
-		} catch (IOException e) {
-			System.out.println("Error while writing songPlayListID");
-		}
+	public static String printAfterPlay(String id) {
+		/*PrintWriter out = response.getWriter();
+		gti785.model.List l = new gti785.model.List(id);
+		out.write(xstream.toXML(l));
+		out.write(id);*/
+		gti785.model.List l = new gti785.model.List(id);
+		return xstream.toXML(l);
 	}
 
 	

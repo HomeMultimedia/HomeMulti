@@ -1,6 +1,7 @@
 package gti785.command;
 
 import gti785.remote.ETSRemote;
+import gti785.view.PrintXML;
 
 public class MediaCommandPlay implements MediaCommand {
 	private ETSRemote remote = null;
@@ -16,7 +17,7 @@ public class MediaCommandPlay implements MediaCommand {
 		int idPlaylist = 0;
 		if (arg != null) {
 			idPlaylist = Integer.parseInt(arg);
-			response = ""+idPlaylist;
+			response = PrintXML.printAfterPlay(""+idPlaylist);
 		}
 		remote.play(idPlaylist);
 		
