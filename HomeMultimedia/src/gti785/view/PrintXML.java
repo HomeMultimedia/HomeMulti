@@ -49,13 +49,15 @@ private static final XStream xstream = new XStream(new DomDriver());
 		}
 	}
 	
-	public void printPlaylist(List<PlaylistItem> files, HttpServletResponse response) {
-		try {				
+	public String printPlaylist(List<PlaylistItem> files) {
+		/*try {				
 			PrintWriter out = response.getWriter();
 			out.write(xstream.toXML(files));
 		} catch (IOException e) {
 			System.out.println("Error while writing file list");
-		}
+		}*/
+		
+		return xstream.toXML(files);
 	}
 	
 	public void printPort(String port, HttpServletResponse response) {
@@ -70,11 +72,13 @@ private static final XStream xstream = new XStream(new DomDriver());
 	public void printAfterPlay(String id, HttpServletResponse response) {
 		try {				
 			PrintWriter out = response.getWriter();
-			gti785.model.List l = new gti785.model.List(id);
-			out.write(xstream.toXML(l));
+			//gti785.model.List l = new gti785.model.List(id);
+			//out.write(xstream.toXML(l));
+			out.write(id);
 		} catch (IOException e) {
 			System.out.println("Error while writing songPlayListID");
 		}
 	}
+
 	
 }

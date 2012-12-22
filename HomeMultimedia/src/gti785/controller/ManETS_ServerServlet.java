@@ -1,5 +1,9 @@
 package gti785.controller;
 
+import gti785.command.ExecuteCommand;
+import gti785.command.MediaCommand;
+import gti785.command.MediaCommandPlay;
+import gti785.command.MediaCommandPlaylistAdd;
 import gti785.model.MediaFolder;
 import gti785.param.Const;
 import gti785.push.Push;
@@ -23,6 +27,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 	private MediaFolder mediaFolder;
 	private PrintXML XMLprinter;
 	private static Push server ; 
+	private ExecuteCommand executer = null;
     /**
      * Default constructor. Instanciates objects artwork, mediaFolder and remote
      */
@@ -36,7 +41,7 @@ public class ManETS_ServerServlet extends HttpServlet {
     	mediaFolder = MediaFolderFactory.getInstance().build();
     	remote = new ETSRemote(mediaFolder, server);
     	XMLprinter = new PrintXML();
-    	
+    	executer = new ExecuteCommand();
     }
 
 	/**
@@ -45,6 +50,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		boolean error = false;
 		String errorMessage = null;
+		MediaCommand toDo = null;
 		
 		String command = null;
 		command = request.getParameter("command");
@@ -59,19 +65,18 @@ public class ManETS_ServerServlet extends HttpServlet {
 		else if(command != null && command.equals("play")){
 			String id = null;
 			id = request.getParameter("option");
-			int idPlaylist = 0;
-			if (id != null) {
-				idPlaylist = Integer.parseInt(id);
-			}
-			if(remote.play(idPlaylist)){
-				System.out.println("Song in play");
-				XMLprinter.printAfterPlay(""+idPlaylist, response);
+			
+			toDo = new MediaCommandPlay(remote, id);
+			
+			/*if(PlayMedia.execute()){
+				
+				XMLprinter.printAfterPlay(""+id, response);
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			else{
 				error = true;
 				errorMessage = "Play : Error while trying to play song.";
-			}
+			}*/
 		}
 		
 		//pause song
@@ -90,8 +95,9 @@ public class ManETS_ServerServlet extends HttpServlet {
 		else if(command != null && command.equals("playlistadd")){
 			String idSong = null;
 			idSong = request.getParameter("option");
-			System.out.println("Received parameters: " + idSong);
-			if( idSong != null ){
+			
+			toDo = new MediaCommandPlaylistAdd(remote, idSong);
+			/*if( idSong != null ){
 				if(remote.playListAdd(Integer.parseInt(idSong)))
 					XMLprinter.printPlaylist(remote.getPlaylist(),response);
 				else{
@@ -102,7 +108,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 			else{
 				error = true;
 				errorMessage = "Play list add: no option";
-			}
+			}*/
 			
 		}
 		
@@ -111,8 +117,10 @@ public class ManETS_ServerServlet extends HttpServlet {
 			String idPlaylist = null;
 			idPlaylist = request.getParameter("option");
 			if( idPlaylist != null ){
-				if(remote.playListRemove(Integer.parseInt(idPlaylist)))
-					XMLprinter.printPlaylist(remote.getPlaylist(),response);
+				if(remote.playListRemove(Integer.parseInt(idPlaylist))){
+					
+				}
+					//XMLprinter.printPlaylist(remote.getPlaylist(),response);
 				else{
 					error = true;
 					errorMessage = "Play list remove: Song does not exist";
@@ -143,7 +151,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		//shuffle play list
 		else if(command != null && command.equals("shuffle")){
 			remote.shuffle();
-			XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
 		}
 		
 		//repeat action
@@ -166,7 +174,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//print play list songs
 		else if(command != null && command.equals("getPlayList")){
-			XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
 		}
 		
 		//get information on current song
@@ -216,6 +224,10 @@ public class ManETS_ServerServlet extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
 			response.getWriter().write("Method does not exist");
 			System.out.println("Method does not exist");
+		}
+		
+		if( toDo != null ){
+			executer.execute(toDo, response);
 		}
 		
 		//print errors
