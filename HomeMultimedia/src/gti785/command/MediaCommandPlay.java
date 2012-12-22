@@ -37,5 +37,7 @@ public class MediaCommandPlay implements MediaCommand {
 		return response;
 	}
 
-
+	public String getArg() {
+		return arg;
+	}
 }

@@ -1,9 +1,14 @@
 package gti785.command;
 
 import gti785.model.MediaFolder;
-import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
+/**
+ * Gets the media list
+ * 
+ * @author Cedric
+ *
+ */
 public class MediaCommandGetList implements MediaCommand {
 	private MediaFolder folder = null;
 	private String arg;
@@ -26,5 +31,8 @@ public class MediaCommandGetList implements MediaCommand {
 		return response;
 	}
 
+	public String getArg() {
+		return arg;
+	}
 
 }

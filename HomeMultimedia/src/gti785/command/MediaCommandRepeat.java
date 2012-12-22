@@ -1,19 +1,16 @@
 package gti785.command;
 
 import gti785.remote.ETSRemote;
-import gti785.view.PrintXML;
 
 public class MediaCommandRepeat implements MediaCommand {
 	private String commandType = "Repeat mode";
 	private String response = "";
 	private String arg = null;
-	ETSRemote remote = null;
-	PrintXML printer = null;
+	private ETSRemote remote = null;
 	
 	public MediaCommandRepeat(ETSRemote remote, String arg){
 		this.arg = arg;
 		this.remote = remote;
-		printer = new PrintXML();
 	}
 	
 	public void execute() throws Exception {
@@ -37,5 +34,8 @@ public class MediaCommandRepeat implements MediaCommand {
 	public String getResponse() {
 		return response;
 	}
-
+	
+	public String getArg() {
+		return arg;
+	}
 }

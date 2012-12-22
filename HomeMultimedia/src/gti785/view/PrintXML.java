@@ -3,11 +3,7 @@ package gti785.view;
 import gti785.model.Media;
 import gti785.model.PlaylistItem;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import uk.co.caprica.vlcj.medialist.MediaListItem;
 
@@ -15,7 +11,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
 /**
- * Class used to print objects in XML format
+ * Class used to create JSON for divers objects or lists.
  * 
  * @author Cedric
  *
@@ -41,43 +37,35 @@ private static final XStream xstream = new XStream(new JettisonMappedXmlDriver()
 	 * @param response
 	 */
 	public static String printMedia(List<Media> files) {
-		/*try {				
-			PrintWriter out = response.getWriter();
-			out.write(xstream.toXML(files));
-		} catch (IOException e) {
-			System.out.println("Error while writing file list");
-		}*/
 		return xstream.toXML(files);
 	}
 	
+	/**
+	 * prints the playlist.
+	 * 
+	 * @param files
+	 * @return 
+	 */
 	public static String printPlaylist(List<PlaylistItem> files) {
-		/*try {				
-			PrintWriter out = response.getWriter();
-			out.write(xstream.toXML(files));
-		} catch (IOException e) {
-			System.out.println("Error while writing file list");
-		}*/
-		
 		return xstream.toXML(files);
 	}
+
+	/**
+	 * Print method when play is executed
+	 * @param id
+	 * @return
+	 */
+	public static String printAfterPlay(String id) {
+		gti785.model.List l = new gti785.model.List(id);
+		return xstream.toXML(l);
+	}
 	
-	public void printPort(String port, HttpServletResponse response) {
+	/*public void printPort(String port, HttpServletResponse response) {
 		try {				
 			PrintWriter out = response.getWriter();
 			out.write(xstream.toXML(port));
 		} catch (IOException e) {
 			System.out.println("Error while writing port number");
 		}
-	}
-	
-	public static String printAfterPlay(String id) {
-		/*PrintWriter out = response.getWriter();
-		gti785.model.List l = new gti785.model.List(id);
-		out.write(xstream.toXML(l));
-		out.write(id);*/
-		gti785.model.List l = new gti785.model.List(id);
-		return xstream.toXML(l);
-	}
-
-	
+	}*/
 }

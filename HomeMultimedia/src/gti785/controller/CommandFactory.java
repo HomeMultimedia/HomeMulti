@@ -16,6 +16,7 @@ import gti785.remote.ETSRemote;
 
 
 /**
+ * The commandFactory enables to get commands throughout the application.
  * 
  * @author Cedric
  *
@@ -59,7 +60,6 @@ public class CommandFactory {
 	public MediaCommand getMediaCommandPrintPlaylist(ETSRemote remote, String arg) {
 		return new MediaCommandPrintPlaylist(remote, arg);
 	}
-
 	public MediaCommand getMediaCommandGetList(MediaFolder folder, String arg) {
 		return new MediaCommandGetList(folder, arg);
 	}

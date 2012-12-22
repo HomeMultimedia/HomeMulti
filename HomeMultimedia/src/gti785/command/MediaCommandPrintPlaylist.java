@@ -3,6 +3,12 @@ package gti785.command;
 import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
+/**
+ * Prints the playlist.
+ * 
+ * @author Cedric
+ *
+ */
 public class MediaCommandPrintPlaylist implements MediaCommand {
 	private ETSRemote remote = null;
 	private String arg;
@@ -25,5 +31,7 @@ public class MediaCommandPrintPlaylist implements MediaCommand {
 		return response;
 	}
 
-
+	public String getArg() {
+		return arg;
+	}
 }

@@ -5,6 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Executes the given command and stores all commands in a history lists. This enables to 
+ * playback all commands for debug purposes.
+ * 
+ * @author Cedric
+ *
+ */
 public class ExecuteCommand {
 	private List<MediaCommand> history = null;
 	

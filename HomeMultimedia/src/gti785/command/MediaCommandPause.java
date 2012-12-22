@@ -25,5 +25,7 @@ public class MediaCommandPause implements MediaCommand {
 		return response;
 	}
 
-
+	public String getArg() {
+		return arg;
+	}
 }

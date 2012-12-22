@@ -44,8 +44,6 @@ public class ManETS_ServerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		boolean error = false;
-		String errorMessage = null;
 		MediaCommand toDo = null;
 		
 		String command = null;

@@ -1,19 +1,16 @@
 package gti785.command;
 
 import gti785.remote.ETSRemote;
-import gti785.view.PrintXML;
 
 public class MediaCommandVolume implements MediaCommand {
 	private String commandType = "Change Volume";
 	private String response = "";
 	private String arg = null;
-	ETSRemote remote = null;
-	PrintXML printer = null;
+	private ETSRemote remote = null;
 	
 	public MediaCommandVolume(ETSRemote remote, String arg){
 		this.arg = arg;
 		this.remote = remote;
-		printer = new PrintXML();
 	}
 	
 	public void execute() throws Exception {
@@ -34,5 +31,8 @@ public class MediaCommandVolume implements MediaCommand {
 	public String getResponse() {
 		return response;
 	}
-
+	
+	public String getArg() {
+		return arg;
+	}
 }

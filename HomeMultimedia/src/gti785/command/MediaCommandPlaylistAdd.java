@@ -7,19 +7,17 @@ public class MediaCommandPlaylistAdd implements MediaCommand {
 	private String commandType = "PlaylistAdd";
 	private String response = "";
 	private String arg = null;
-	ETSRemote remote = null;
-	PrintXML printer = null;
+	private ETSRemote remote = null;
 	
 	public MediaCommandPlaylistAdd(ETSRemote remote, String arg){
 		this.arg = arg;
 		this.remote = remote;
-		printer = new PrintXML();
 	}
 	
 	public void execute() throws Exception {
 		if( arg != null ){
 			if(remote.playListAdd(Integer.parseInt(arg))){
-				response = printer.printPlaylist(remote.getPlaylist());
+				response = PrintXML.printPlaylist(remote.getPlaylist());
 			}
 			else{
 				throw new Exception("Play list add: Song does not exist");
@@ -39,4 +37,7 @@ public class MediaCommandPlaylistAdd implements MediaCommand {
 		return response;
 	}
 
+	public String getArg() {
+		return arg;
+	}
 }
