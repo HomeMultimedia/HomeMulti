@@ -4,7 +4,7 @@ import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
 public class MediaCommandPlaylistRemove implements MediaCommand {
-	private String commandType = "PlaylistAdd";
+	private String commandType = "PlaylistRemove";
 	private String response = "";
 	private String arg = null;
 	ETSRemote remote = null;

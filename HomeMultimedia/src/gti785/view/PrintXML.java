@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
 /**
  * Class used to print objects in XML format
@@ -21,7 +21,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  *
  */
 public class PrintXML {
-private static final XStream xstream = new XStream(new DomDriver());
+private static final XStream xstream = new XStream(new JettisonMappedXmlDriver());
 	
 	// Configuration de XStream
 	static {
@@ -40,16 +40,17 @@ private static final XStream xstream = new XStream(new DomDriver());
 	 * @param files
 	 * @param response
 	 */
-	public void printMedia(List<Media> files, HttpServletResponse response) {
-		try {				
+	public static String printMedia(List<Media> files) {
+		/*try {				
 			PrintWriter out = response.getWriter();
 			out.write(xstream.toXML(files));
 		} catch (IOException e) {
 			System.out.println("Error while writing file list");
-		}
+		}*/
+		return xstream.toXML(files);
 	}
 	
-	public String printPlaylist(List<PlaylistItem> files) {
+	public static String printPlaylist(List<PlaylistItem> files) {
 		/*try {				
 			PrintWriter out = response.getWriter();
 			out.write(xstream.toXML(files));

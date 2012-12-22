@@ -4,7 +4,7 @@ import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
 public class MediaCommandRepeat implements MediaCommand {
-	private String commandType = "PlaylistAdd";
+	private String commandType = "Repeat mode";
 	private String response = "";
 	private String arg = null;
 	ETSRemote remote = null;

@@ -23,7 +23,6 @@ public class ManETS_ServerServlet extends HttpServlet {
 	private ETSRemote remote;
 	
 	private MediaFolder mediaFolder;
-	private PrintXML XMLprinter;
 	private static Push server ; 
 	private ExecuteCommand executer = null;
     /**
@@ -38,7 +37,6 @@ public class ManETS_ServerServlet extends HttpServlet {
 		} 
     	mediaFolder = MediaFolderFactory.getInstance().build();
     	remote = new ETSRemote(mediaFolder, server);
-    	XMLprinter = new PrintXML();
     	executer = new ExecuteCommand();
     }
 
@@ -56,7 +54,8 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//get all media list
 		if(command != null && command.equals("getList")){
-			XMLprinter.printMedia(mediaFolder.getFiles(), response);
+			//XMLprinter.printMedia(mediaFolder.getFiles(), response);
+			toDo = CommandFactory.getInstance().getMediaCommandGetList(mediaFolder, "");
 		}
 		
 		//play song
@@ -68,8 +67,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//pause song
 		else if(command != null && command.equals("pause")){
-			remote.pause();
-			System.out.println("Song paused");
+			toDo = CommandFactory.getInstance().getMediaCommandPause(remote, "");
 		}
 		
 		//stop song
@@ -109,8 +107,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//shuffle play list
 		else if(command != null && command.equals("shuffle")){
-			remote.shuffle();
-			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			toDo = CommandFactory.getInstance().getMediaCommandShuffle(remote, "");
 		}
 		
 		//repeat action
@@ -122,12 +119,12 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//print play list songs
 		else if(command != null && command.equals("getPlayList")){
-			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			toDo = CommandFactory.getInstance().getMediaCommandPrintPlaylist(remote, "");
 		}
 		
 		//get information on current song
 		else if(command != null && command.equals("poll")){
-			toDo = CommandFactory.getInstance().getMediaCommandPoll(remote, null);
+			toDo = CommandFactory.getInstance().getMediaCommandPoll(remote, "");
 		}
 		
 		//set volume
@@ -137,7 +134,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		}
 		
 		//get information on current song
-		else if(command != null && command.equals("setStream")){
+		/*else if(command != null && command.equals("setStream")){
 			String mode = null;
 			mode = request.getParameter("option");
 			if( mode != null){
@@ -157,7 +154,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 				error = true;
 				errorMessage = "Streaming mode: no option";
 			}
-		}
+		}*/
 
 		//return not implemented
 		else{
@@ -166,15 +163,15 @@ public class ManETS_ServerServlet extends HttpServlet {
 			System.out.println("Method does not exist");
 		}
 		
-		if( toDo != null ){
-			executer.execute(toDo, response);
+		try{
+			if( toDo != null ){
+				executer.execute(toDo, response);
+			}
 		}
-		
-		//print errors
-		if(error){
+		catch(Exception e){//print errors
 			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-			response.getWriter().write(errorMessage);
-			System.out.println(errorMessage);
+			response.getWriter().write(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 	
