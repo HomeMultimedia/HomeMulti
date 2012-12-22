@@ -48,18 +48,16 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		String command = null;
 		command = request.getParameter("command");
-		System.out.println(command);
+		//System.out.println(command);
 		
 		//get all media list
 		if(command != null && command.equals("getList")){
-			//XMLprinter.printMedia(mediaFolder.getFiles(), response);
 			toDo = CommandFactory.getInstance().getMediaCommandGetList(mediaFolder, "");
 		}
 		
 		//play song
 		else if(command != null && command.equals("play")){
-			String id = null;
-			id = request.getParameter("option");
+			String id = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlay(remote, id);
 		}
 		
@@ -76,15 +74,13 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//add song to playlist
 		else if(command != null && command.equals("playlistadd")){
-			String idSong = null;
-			idSong = request.getParameter("option");
+			String idSong = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlaylistAdd(remote, idSong);
 		}
 		
 		//remove song from playlist
 		else if(command != null && command.equals("playlistremove")){
-			String idPlaylist = null;
-			idPlaylist = request.getParameter("option");
+			String idPlaylist = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlaylistRemove(remote, idPlaylist);
 		}
 		
@@ -110,8 +106,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//repeat action
 		else if(command != null && command.equals("repeat")){
-			String mode = null;
-			mode = request.getParameter("option");
+			String mode = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandRepeat(remote, mode);
 		}
 		
