@@ -6,3 +6,7 @@
 HomeMultimedia/.settings/*
 
 *.class
+
+HomeMultimedia/.classpath
+
+HomeMultimedia/.project

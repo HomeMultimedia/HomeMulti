@@ -69,11 +69,11 @@ private static final XStream xstream = new XStream(new DomDriver());
 		}
 	}
 	
-	public void printAfterPlay(String id, HttpServletResponse response) {
+	public String printAfterPlay(String id, HttpServletResponse response) {
 		try {				
 			PrintWriter out = response.getWriter();
-			//gti785.model.List l = new gti785.model.List(id);
-			//out.write(xstream.toXML(l));
+			gti785.model.List l = new gti785.model.List(id);
+			out.write(xstream.toXML(l));
 			out.write(id);
 		} catch (IOException e) {
 			System.out.println("Error while writing songPlayListID");
