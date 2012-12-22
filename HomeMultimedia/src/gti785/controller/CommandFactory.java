@@ -1,5 +1,12 @@
-package gti785.command;
+package gti785.controller;
 
+import gti785.command.MediaCommand;
+import gti785.command.MediaCommandPlay;
+import gti785.command.MediaCommandPlaylistAdd;
+import gti785.command.MediaCommandPlaylistRemove;
+import gti785.command.MediaCommandPoll;
+import gti785.command.MediaCommandRepeat;
+import gti785.command.MediaCommandVolume;
 import gti785.remote.ETSRemote;
 
 

@@ -1,6 +1,5 @@
 package gti785.controller;
 
-import gti785.command.CommandFactory;
 import gti785.command.ExecuteCommand;
 import gti785.command.MediaCommand;
 import gti785.model.MediaFolder;
