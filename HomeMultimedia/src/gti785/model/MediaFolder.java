@@ -19,19 +19,19 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
 /**
- * Le MediaFolder permet de gŽrer les mŽdias du dossier multimŽdia.
+ * Le MediaFolder permet de gï¿½rer les mï¿½dias du dossier multimï¿½dia.
  * 
  * @author Cedric
  *
  */
-public class MediaFolder {
+public class MediaFolder{
 	private List<Media> files = null;
 	private File _folder;
 	private ArtworkFolder artwork;
-	
+	private List<MediaFolder> folders;
 	/**
-	 * Constructeur, remplit la liste files avec tous les mŽdias du dossier
-	 * multimŽdia.
+	 * Constructeur, remplit la liste files avec tous les mï¿½dias du dossier
+	 * multimï¿½dia.
 	 * 
 	 * @param folder path to the folder which will contain medias
 	 * @param artwork Object responsible for artwork
@@ -47,7 +47,7 @@ public class MediaFolder {
 	 * @param filename path to check
 	 * @return true if .mp3 or .m4a
 	 */
-	private boolean checkMP3(String filename) { //DŽplacer vers utils?
+	private boolean checkMP3(String filename) { //Dï¿½placer vers utils?
 		int pos = filename.lastIndexOf(".");
 		String extension = filename.substring(pos);
 		return extension.equals(".mp3") || extension.equals(".m4a");
@@ -71,7 +71,7 @@ public class MediaFolder {
 	public MediaFolder build() {
 		try {
 			int i = 0;
-			for(File file: _folder.listFiles()){//crŽer une fonction
+			for(File file: _folder.listFiles()){//crï¿½er une fonction
 				AudioFile f;
 				String filename = file.toString();
 				
@@ -92,7 +92,7 @@ public class MediaFolder {
 						
 						BufferedImage img = (BufferedImage)tag.getFirstArtwork().getImage(); //error if no artwork
 						//if( img != null)
-							artwork.saveToFolder(img, album);//gŽrer if album = null
+							artwork.saveToFolder(img, album);//gï¿½rer if album = null
 					}
 					else if(tag.getFirstArtwork() == null){//mettre image par def
 						poster = Const.ARTWORK_URL+"default.png";
@@ -128,5 +128,13 @@ public class MediaFolder {
 		}
 		
 		return null;
+	}
+
+	public List<MediaFolder> getFolders() {
+		return folders;
+	}
+
+	public List<Media> getMedias() {
+		return files;
 	}
 }

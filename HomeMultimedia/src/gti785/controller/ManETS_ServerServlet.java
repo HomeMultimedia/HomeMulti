@@ -3,16 +3,13 @@ package gti785.controller;
 import gti785.command.ExecuteCommand;
 import gti785.command.MediaCommand;
 import gti785.model.MediaFolder;
-import gti785.param.Const;
 import gti785.push.Push;
 import gti785.remote.ETSRemote;
-import gti785.view.PrintXML;
 
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,14 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MultiServlet
  */
-
-@WebServlet("/Man")
 public class ManETS_ServerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ETSRemote remote;
 	
 	private MediaFolder mediaFolder;
-	private PrintXML XMLprinter;
 	private static Push server ; 
 	private ExecuteCommand executer = null;
     /**
@@ -39,10 +33,9 @@ public class ManETS_ServerServlet extends HttpServlet {
     		server.start();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
     	mediaFolder = MediaFolderFactory.getInstance().build();
     	remote = new ETSRemote(mediaFolder, server);
-    	XMLprinter = new PrintXML();
     	executer = new ExecuteCommand();
     }
 
@@ -59,30 +52,26 @@ public class ManETS_ServerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean error = false;
-		String errorMessage = null;
 		MediaCommand toDo = null;
 		
 		String command = null;
 		command = request.getParameter("command");
-		System.out.println(command);
+		//System.out.println(command);
 		
 		//get all media list
 		if(command != null && command.equals("getList")){
-			XMLprinter.printMedia(mediaFolder.getFiles(), response);
+			toDo = CommandFactory.getInstance().getMediaCommandGetList(mediaFolder, "");
 		}
 		
 		//play song
 		else if(command != null && command.equals("play")){
-			String id = null;
-			id = request.getParameter("option");
+			String id = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlay(remote, id);
 		}
 		
 		//pause song
 		else if(command != null && command.equals("pause")){
-			remote.pause();
-			System.out.println("Song paused");
+			toDo = CommandFactory.getInstance().getMediaCommandPause(remote, "");
 		}
 		
 		//stop song
@@ -93,15 +82,13 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//add song to playlist
 		else if(command != null && command.equals("playlistadd")){
-			String idSong = null;
-			idSong = request.getParameter("option");
+			String idSong = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlaylistAdd(remote, idSong);
 		}
 		
 		//remove song from playlist
 		else if(command != null && command.equals("playlistremove")){
-			String idPlaylist = null;
-			idPlaylist = request.getParameter("option");
+			String idPlaylist = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandPlaylistRemove(remote, idPlaylist);
 		}
 		
@@ -122,25 +109,23 @@ public class ManETS_ServerServlet extends HttpServlet {
 		
 		//shuffle play list
 		else if(command != null && command.equals("shuffle")){
-			remote.shuffle();
-			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			toDo = CommandFactory.getInstance().getMediaCommandShuffle(remote, "");
 		}
 		
 		//repeat action
 		else if(command != null && command.equals("repeat")){
-			String mode = null;
-			mode = request.getParameter("option");
+			String mode = request.getParameter("option");
 			toDo = CommandFactory.getInstance().getMediaCommandRepeat(remote, mode);
 		}
 		
 		//print play list songs
 		else if(command != null && command.equals("getPlayList")){
-			//XMLprinter.printPlaylist(remote.getPlaylist(),response);
+			toDo = CommandFactory.getInstance().getMediaCommandPrintPlaylist(remote, "");
 		}
 		
 		//get information on current song
 		else if(command != null && command.equals("poll")){
-			toDo = CommandFactory.getInstance().getMediaCommandPoll(remote, null);
+			toDo = CommandFactory.getInstance().getMediaCommandPoll(remote, "");
 		}
 		
 		//set volume
@@ -150,7 +135,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 		}
 		
 		//get information on current song
-		else if(command != null && command.equals("setStream")){
+		/*else if(command != null && command.equals("setStream")){
 			String mode = null;
 			mode = request.getParameter("option");
 			if( mode != null){
@@ -170,7 +155,7 @@ public class ManETS_ServerServlet extends HttpServlet {
 				error = true;
 				errorMessage = "Streaming mode: no option";
 			}
-		}
+		}*/
 
 		//return not implemented
 		else{
@@ -179,15 +164,15 @@ public class ManETS_ServerServlet extends HttpServlet {
 			System.out.println("Method does not exist");
 		}
 		
-		if( toDo != null ){
-			executer.execute(toDo, response);
+		try{
+			if( toDo != null ){
+				executer.execute(toDo, response);
+			}
 		}
-		
-		//print errors
-		if(error){
+		catch(Exception e){//print errors
 			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-			response.getWriter().write(errorMessage);
-			System.out.println(errorMessage);
+			response.getWriter().write(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 

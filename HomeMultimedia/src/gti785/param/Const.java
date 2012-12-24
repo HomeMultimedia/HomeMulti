@@ -1,13 +1,13 @@
 package gti785.param;
 
 public class Const {
-	public final static String dossierImage = "D:\\Images";
+	public final static String dossierImage = "/Users/Cedric/Documents/Quebec/Cours/GTI785/Lab/Lab 02/Projet2/ManETS/WebContent/Artwork";
 	//public final static String dossierImage = "C:\\Users\\Fab\\Desktop\\COURS\\785\\android\\Projet2\\ManETS\\WebContent\\Artwork";
 	/*
 	 * fabien "C:\\Users\\Fab\\Desktop\\COURS\\785\\android\\Projet2\\ManETS\\WebContent\\Artwork";
 	 * cedric  "/Users/Cedric/Documents/Quebec/Cours/GTI785/Lab/Lab 02/Projet2/ManETS/WebContent/Artwork"
 	 */
-	public final static String dossier = "D:\\Musique\\Air\\Moon Safari";
+	public final static String dossier = "/Users/Cedric/Documents/Quebec/Cours/GTI785/Lab/Lab 02/Media/";
 	//public final static String dossier = "C:\\Users\\Fab\\Desktop\\COURS\\785\\android\\Projet2\\music";
 	/*
 	 * fabien "C:\\Users\\Fab\\Desktop\\COURS\\785\\android\\Projet2\\music"
@@ -15,7 +15,7 @@ public class Const {
 	 * 
 	 */
 	
-	public final static String vlcj = "C:\\Program Files\\VideoLAN\\VLC";
+	public final static String vlcj = "/Applications/VLC.app/Contents/MacOS/lib";
 	//public final static String vlcj = "C:\\Users\\Fab\\Desktop\\VLC";
 	
 	/*
