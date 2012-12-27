@@ -27,7 +27,6 @@ public class ExecuteCommand {
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		catch(Exception e){
-			//System.out.println(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}
