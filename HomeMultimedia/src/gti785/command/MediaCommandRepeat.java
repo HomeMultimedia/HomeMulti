@@ -1,5 +1,6 @@
 package gti785.command;
 
+import gti785.controller.Contexte;
 import gti785.remote.ETSRemote;
 
 public class MediaCommandRepeat implements MediaCommand {
@@ -8,9 +9,9 @@ public class MediaCommandRepeat implements MediaCommand {
 	private String arg = null;
 	private ETSRemote remote = null;
 	
-	public MediaCommandRepeat(ETSRemote remote, String arg){
+	public MediaCommandRepeat(String arg){
 		this.arg = arg;
-		this.remote = remote;
+		this.remote = Contexte.getInstance().getRemote();
 	}
 	
 	public void execute() throws Exception {

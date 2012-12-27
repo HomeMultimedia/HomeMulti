@@ -1,5 +1,6 @@
 package gti785.command;
 
+import gti785.controller.Contexte;
 import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
@@ -15,8 +16,8 @@ public class MediaCommandShuffle implements MediaCommand {
 	private String commandType = "Shuffle";
 	private String response = "";
 	
-	public MediaCommandShuffle(ETSRemote remote, String arg){
-		this.remote = remote;
+	public MediaCommandShuffle(String arg){
+		this.remote = Contexte.getInstance().getRemote();
 	}
 	
 	public void execute() throws Exception{

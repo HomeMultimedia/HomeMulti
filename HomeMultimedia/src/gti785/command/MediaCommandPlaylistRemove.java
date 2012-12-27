@@ -1,5 +1,6 @@
 package gti785.command;
 
+import gti785.controller.Contexte;
 import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
@@ -9,9 +10,9 @@ public class MediaCommandPlaylistRemove implements MediaCommand {
 	private String arg = null;
 	private ETSRemote remote = null;
 	
-	public MediaCommandPlaylistRemove(ETSRemote remote, String arg){
+	public MediaCommandPlaylistRemove(String arg){
 		this.arg = arg;
-		this.remote = remote;
+		this.remote = Contexte.getInstance().getRemote();
 	}
 	
 	public void execute() throws Exception {

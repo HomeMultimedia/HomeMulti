@@ -1,6 +1,7 @@
 package gti785.model;
 
 
+import gti785.controller.MediaFolderFactory;
 import gti785.param.Const;
 
 import java.awt.image.BufferedImage;
@@ -28,7 +29,8 @@ public class MediaFolder{
 	private List<Media> files = null;
 	private File _folder;
 	private ArtworkFolder artwork;
-	private List<MediaFolder> folders;
+	private List<File> folders;
+	private String racine = "";
 	/**
 	 * Constructeur, remplit la liste files avec tous les m�dias du dossier
 	 * multim�dia.
@@ -38,8 +40,12 @@ public class MediaFolder{
 	 */
 	public MediaFolder(File folder){
 		_folder = folder;
+		/*int ind = folder.getAbsolutePath().lastIndexOf("/");
+		racine = folder.getAbsolutePath().substring(0, ind);*/
+		racine = folder.getAbsolutePath();
 		this.artwork = new ArtworkFolder(new File(Const.dossierImage));
 		this.files = new ArrayList<Media>();
+		folders = new ArrayList<File>();
 	}
 	
 	/**
@@ -54,6 +60,30 @@ public class MediaFolder{
 	}
 	
 	/**
+	 * OpenFolder returns an instance of a contained MediaFolder
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public MediaFolder OpenFolder(File file){
+		if(folders.contains(file)){
+			int index = folders.indexOf(file);
+			return MediaFolderFactory.getInstance().build(folders.get(index));
+		}
+		else
+			return null;
+	}
+	
+	public MediaFolder upFolder(){
+		int index = _folder.getAbsolutePath().lastIndexOf("/");
+		String path = _folder.getAbsolutePath().substring(0, index);
+		File file = new File(path);
+		if(file.exists())
+			return MediaFolderFactory.getInstance().build(file);
+		else
+			return null;
+	}
+	/**
 	 * GETTERS and SETTERS
 	 * 
 	 * @return
@@ -61,6 +91,15 @@ public class MediaFolder{
 	public List<Media> getFiles() {
 		return files;
 	}
+	
+	public String getRacine() {
+		return racine;
+	}
+	
+	public List<File> getFolders(){
+		return folders;
+	}
+	
 
 	/**
 	 * build is called on creation of the mediaFolder. Retrieves song information 
@@ -74,8 +113,10 @@ public class MediaFolder{
 			for(File file: _folder.listFiles()){//cr�er une fonction
 				AudioFile f;
 				String filename = file.toString();
-				
-				if( checkMP3(filename)){//if mp3 (or m4a)
+				if(file.isDirectory()){
+					folders.add(file);
+				}
+				else if( checkMP3(filename)){//if mp3 (or m4a)
 					
 					//jaudiotagger fonctions
 					f = AudioFileIO.read(new File(filename));
@@ -87,6 +128,7 @@ public class MediaFolder{
 					int length = f.getAudioHeader().getTrackLength();
 					String mrl = file.toString();
 					String[] title = mrl.split("/");
+					title = mrl.split("\\");
 					
 					if(!artwork.imageExist(album) && tag.getFirstArtwork() != null){
 						
@@ -130,11 +172,4 @@ public class MediaFolder{
 		return null;
 	}
 
-	public List<MediaFolder> getFolders() {
-		return folders;
-	}
-
-	public List<Media> getMedias() {
-		return files;
-	}
 }

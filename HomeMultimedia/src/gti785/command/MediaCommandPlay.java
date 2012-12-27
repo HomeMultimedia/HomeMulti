@@ -1,16 +1,17 @@
 package gti785.command;
 
+import gti785.controller.Contexte;
 import gti785.remote.ETSRemote;
 import gti785.view.PrintXML;
 
 public class MediaCommandPlay implements MediaCommand {
 	private ETSRemote remote = null;
-	private String arg;
+	private String arg = "";
 	private String commandType = "Play Media";
 	private String response = "";
 	
-	public MediaCommandPlay(ETSRemote remote, String arg){
-		this.remote = remote;
+	public MediaCommandPlay(String arg){
+		this.remote = Contexte.getInstance().getRemote();
 	}
 	
 	public void execute() throws Exception{

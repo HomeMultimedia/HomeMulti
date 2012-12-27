@@ -3,6 +3,7 @@ package gti785.view;
 import gti785.model.Media;
 import gti785.model.PlaylistItem;
 
+import java.io.File;
 import java.util.List;
 
 import uk.co.caprica.vlcj.medialist.MediaListItem;
@@ -23,11 +24,15 @@ private static final XStream xstream = new XStream(new JettisonMappedXmlDriver()
 	static {
 		xstream.setMode(XStream.NO_REFERENCES);
 		xstream.alias("song", Media.class);
-		xstream.alias("list", List.class);
+		//xstream.alias("test", List.class);
 		xstream.alias("list",  gti785.model.List.class);
 		xstream.alias("playlist", MediaListItem.class);
 		xstream.alias("playlist", PlaylistItem.class);
 		xstream.alias("port", String.class);
+		xstream.alias("name", File.class);
+		
+		xstream.alias("folder",Folder.class);
+		xstream.alias("folderList",Folders.class);
 	}
 	
 	/**
@@ -48,6 +53,16 @@ private static final XStream xstream = new XStream(new JettisonMappedXmlDriver()
 	 */
 	public static String printPlaylist(List<PlaylistItem> files) {
 		return xstream.toXML(files);
+	}
+	
+	/**
+	 * prints folders.
+	 * 
+	 * @param files
+	 * @return 
+	 */
+	public static String printFolders(Folders fs) {
+		return xstream.toXML(fs);
 	}
 
 	/**

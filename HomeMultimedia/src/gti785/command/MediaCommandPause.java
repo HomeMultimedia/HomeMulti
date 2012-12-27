@@ -1,5 +1,6 @@
 package gti785.command;
 
+import gti785.controller.Contexte;
 import gti785.remote.ETSRemote;
 
 public class MediaCommandPause implements MediaCommand {
@@ -8,8 +9,8 @@ public class MediaCommandPause implements MediaCommand {
 	private String commandType = "Pause Media";
 	private String response = "";
 	
-	public MediaCommandPause(ETSRemote remote, String arg){
-		this.remote = remote;
+	public MediaCommandPause(String arg){
+		this.remote = Contexte.getInstance().getRemote();
 	}
 	
 	public void execute() throws Exception{

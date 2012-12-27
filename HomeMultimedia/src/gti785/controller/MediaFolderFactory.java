@@ -23,7 +23,10 @@ public class MediaFolderFactory {
 	}
 	
 	
-	public MediaFolder build(){
-		return new MediaFolder(new File(Const.dossier)).build();
+	public MediaFolder build(File file){
+		if(file == null){
+			file = new File(Const.dossier);
+		}
+		return new MediaFolder(file).build();
 	}
 }
