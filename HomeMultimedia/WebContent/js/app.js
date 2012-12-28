@@ -24,9 +24,9 @@ app.SongsDownload = function(handler){
 		dataJSON.list.song.forEach(function(el){
 			app.songs.push(el);
 		});
-		if(typeof handler === 'function'){
+		if(typeof(handler) == 'function'){
 			handler.apply(app);
-		} else {console.log('handler in SongsDownload not a method !');};
+		}
 	});
 };
 
@@ -39,36 +39,21 @@ app.PlaylistDownload = function(handler){
 				app.playlist.push(el);
 			});
 		}
-		if(typeof handler === 'function'){
+		if(typeof(handler) == 'function'){
 			handler.apply(app);
-		} else {console.log('handler in SongsDownload not a method !');};
+		}
 	});
 };
 
 // on affiche les chansons dans le champ prévu à cette effet
 app.SongsView = function(){
-	$("#playlist").html('');
+	$("#song-browser").html('');
 	this.songs.forEach(function(el){
 		// TODO remplacer le content par un template
 		var content = "<li class='song' aria-songID='"+el.songID+"'><button class='btn btn-small addToPlaylist'><i class='icon-plus'></i></button>"+el.title+"</li>";
 		$("#song-browser").append(content);
 		$(content).click(function(){console.log(this);});
 	});
-	var addToPlaylist = function(e){
-		// TODO envoyer la requete ajax au serveur pour l'ajouter.
-		var el;
-		// On vérifie que l'event vient du click sur le btn ou du dblclick
-		if($(this).is('li')){
-			el = $(this);
-		}else{
-			el = $(this).parent();
-		}
-		var songid = el.attr('aria-songID');
-		console.log(songid);
-		app.playlist.push({songID:songid},function(){
-			app.PlaylistView();
-		});
-	};
 	$('.song').dblclick(addToPlaylist);
 	$('.addToPlaylist').click(addToPlaylist);
 };
@@ -90,7 +75,25 @@ app.PlaylistView = function(){
 	});
 };
 
+// Fonction qui permet d'ajouter la chanson dans du navigateur dans la playlist
+var addToPlaylist = function(){
+	var el;
+	// On vérifie que l'event vient du click sur le btn ou du dblclick
+	if($(this).is('li')){
+		el = $(this);
+	}else{
+		el = $(this).parent();
+	}
+	var songid = el.attr('aria-songID');
+	$.post('',{command:'playlistadd',option:songid},function(){
+		app.playlist.push({songID:songid},function(){
+			app.PlaylistView();
+		});
+	});
+};
 
+// Ce qu'on fait au lancement de la page
+// C'est içi qu'on appele les fonctions du coup
 $(document).ready(function(){
 	app.SongsDownload(app.SongsView);
 	app.PlaylistDownload(app.PlaylistView);
