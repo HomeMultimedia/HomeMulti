@@ -1,6 +1,6 @@
 /*
  * Bienvenue sur le application de navigateur multimedia 
- * Coté javascript
+ * Cotï¿½ javascript
  * 
  * @Author Thomas
  * @Status Developpment
@@ -8,7 +8,7 @@
  * 
 **/
 
-// on déclare l'application
+// on dï¿½clare l'application
 app = {};
 
 // chansons disponibles dans l'ordi a partir du root
@@ -17,16 +17,17 @@ app.songs = [];
 // chansons dans la playlist
 app.playlist = new Playlist();
 
-// function qui download les chansons à partir du root
+// function qui download les chansons ï¿½ partir du root
 app.SongsDownload = function(handler){
 	$.post('',{command:'getList'},function(data){
 		var dataJSON = JSON.parse(data);
-		dataJSON.list.song.forEach(function(el){
+		dataJSON.media.list.song.forEach(function(el){
 			app.songs.push(el);
 		});
 		if(typeof(handler) == 'function'){
 			handler.apply(app);
 		}
+		app.PlaylistDownload(app.PlaylistView);
 	});
 };
 
@@ -45,12 +46,14 @@ app.PlaylistDownload = function(handler){
 	});
 };
 
-// on affiche les chansons dans le champ prévu à cette effet
+// on affiche les chansons dans le champ prï¿½vu ï¿½ cette effet
 app.SongsView = function(){
 	$("#song-browser").html('');
 	this.songs.forEach(function(el){
 		// TODO remplacer le content par un template
-		var content = "<li class='song' aria-songID='"+el.songID+"'><button class='btn btn-small addToPlaylist'><i class='icon-plus'></i></button>"+el.title+"</li>";
+		//var content = "<li class='song' aria-songID='"+el.songID+"'><button class='btn btn-small addToPlaylist'><i class='icon-plus'></i></button>"+el.title+"</li>";
+		var content = "<tr class='song' aria-songID='"+el.songID+"'><td><button class='btn btn-small addToPlaylist'><i class='icon-plus'></i></button>"+el.title+"</td></tr>";
+				
 		$("#song-browser").append(content);
 		$(content).click(function(){console.log(this);});
 	});
@@ -67,22 +70,22 @@ app.PlaylistView = function(){
 			return elPlaylist.songID == elSongs.songID;
 		});
 		// TODO remplacer le content par un template
-		var content = "<li class='play'>"+elPlaylist.title+"</li>";
+		//var content = "<li class='play'>"+elPlaylist.title+"</li>";
+		var content = "<tr class='play' aria-SongPlayListID='"+elPlaylist.SongPlayListID+"'><td>"+elPlaylist.title+"</td></tr>"
 		$("#playlist").append(content);
 	});
-	$('.play').click(function(e){
-		// TODO faire jouer la chanson
-	});
+	$('.play').click(playSong);
 };
 
 // Fonction qui permet d'ajouter la chanson dans du navigateur dans la playlist
 var addToPlaylist = function(){
 	var el;
-	// On vérifie que l'event vient du click sur le btn ou du dblclick
-	if($(this).is('li')){
+	// On vï¿½rifie que l'event vient du click sur le btn ou du dblclick
+	//if($(this).is('li')){
+	if($(this).is('tr')){
 		el = $(this);
 	}else{
-		el = $(this).parent();
+		el = $(this).parent().parent();
 	}
 	var songid = el.attr('aria-songID');
 	$.post('',{command:'playlistadd',option:songid},function(){
@@ -92,9 +95,22 @@ var addToPlaylist = function(){
 	});
 };
 
+//jouer une chanson
+var playSong = function(){
+	el=$(this);
+	var SongPlayListID = el.attr('aria-SongPlayListID');
+	$.post('',{command:'play',option:SongPlayListID},function(data){
+		var songID = app.playlist.stack[SongPlayListID].songID;
+		var imgUrl = app.songs[songID].poster;
+		img=document.createElement('img');
+		img.src=imgUrl;
+		$("#artwork-container").html(img);
+	});
+};
+
 // Ce qu'on fait au lancement de la page
-// C'est içi qu'on appele les fonctions du coup
+// C'est iï¿½i qu'on appele les fonctions du coup
 $(document).ready(function(){
 	app.SongsDownload(app.SongsView);
-	app.PlaylistDownload(app.PlaylistView);
+	//app.PlaylistDownload(app.PlaylistView);
 });

@@ -1,0 +1,3 @@
+/*surcharge Bootstrap*/
+.table th, .table td { display:block;width:220px;vertical-align:middle !important;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer; }
+.btn { margin-right:10px; }

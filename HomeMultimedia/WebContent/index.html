@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="css/jquery-ui.css"/>
     <link rel="stylesheet" href="css/bootstrap.css">
-
+	<link rel="stylesheet" href="css/main.css">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -26,17 +26,23 @@
 		<div class="row" id="body">
 			<!-- içi la playlist en cours -->
 			<div class="span3">
-				<ul id="playlist" class="unstyled">
-				</ul>
+				<!-- <ul id="playlist" class="unstyled">
+				</ul> -->
+				<table id="playlist" class="table">
+				</table>
 			</div>
 			<!-- içi la chanson qui se joue ou est en pause -->
 			<div class="span6" id="current-song">
-			
+				<div id="artwork-container">
+				
+				</div>
 			</div>
 			<!-- içi les chansons disponibles -->
 			<div class="span3">
-				<ul id="song-browser" class="unstyled">
-				</ul>
+				<!--  <ul id="song-browser" class="unstyled">
+				</ul>-->
+				<table id="song-browser" class="table">
+				</table>
 			</div>
 		</div>
 		<div class="row" id="song-status">
