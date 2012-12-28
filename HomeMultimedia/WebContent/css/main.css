@@ -1,3 +1,8 @@
 /*surcharge Bootstrap*/
 .table th, .table td { display:block;width:220px;vertical-align:middle !important;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer; }
 .btn { margin-right:10px; }
+
+div.container{ margin-top:50px;margin-bottom:50px;background:white;padding:30px;-webkit-border-radius: 15px;-moz-border-radius: 15px;border-radius: 15px;
+-moz-box-shadow: 5px 5px 15px 0px #656565;-webkit-box-shadow: 5px 5px 15px 0px #656565;-o-box-shadow: 5px 5px 15px 0px #656565;box-shadow: 5px 5px 15px 0px #656565;}
+div#artwork-container{ text-align:center; }
+body{ background-image:url('../img/stripe_background.png')}

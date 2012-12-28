@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="css/jquery-ui.css"/>
     <link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
+	<link href="css/customScrollbar.css" rel="stylesheet" type="text/css" />
+	
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -28,8 +30,10 @@
 			<div class="span3">
 				<!-- <ul id="playlist" class="unstyled">
 				</ul> -->
-				<table id="playlist" class="table">
-				</table>
+				<div class="content_3 content" style="height:250px;">
+					<table id="playlist" class="table">
+					</table>
+				</div>
 			</div>
 			<!-- içi la chanson qui se joue ou est en pause -->
 			<div class="span6" id="current-song">
@@ -41,8 +45,10 @@
 			<div class="span3">
 				<!--  <ul id="song-browser" class="unstyled">
 				</ul>-->
-				<table id="song-browser" class="table">
-				</table>
+				<div class="content_2 content" style="height:250px;">
+					<table id="song-browser" class="table">
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="row" id="song-status">
@@ -58,6 +64,9 @@
 	<script src="js/lib/jquery-ui.js"></script>
 	<script src="js/lib/bootstrap.js"></script>
 	<script src="js/event-array.js"></script>
+	<script src="js/lib/jquery.mousewheel.min.js"></script>
+	<script src="js/lib/jquery.mCustomScrollbar.js"></script>
     <script src="js/app.js"></script>
+	
   </body>
 </html>

@@ -28,6 +28,9 @@ app.SongsDownload = function(handler){
 			handler.apply(app);
 		}
 		app.PlaylistDownload(app.PlaylistView);
+		$(".content_2").mCustomScrollbar({
+	    	scrollInertia:0
+	    });
 	});
 };
 
@@ -43,6 +46,9 @@ app.PlaylistDownload = function(handler){
 		if(typeof(handler) == 'function'){
 			handler.apply(app);
 		}
+		$(".content_3").mCustomScrollbar({
+	    	scrollInertia:0
+	    });
 	});
 };
 
@@ -113,4 +119,5 @@ var playSong = function(){
 $(document).ready(function(){
 	app.SongsDownload(app.SongsView);
 	//app.PlaylistDownload(app.PlaylistView);
+	
 });
