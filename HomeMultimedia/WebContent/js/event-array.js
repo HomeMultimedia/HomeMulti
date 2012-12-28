@@ -8,38 +8,17 @@ function Playlist(){
 	// On reimplémente les fonctions de Array
 	// https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array
 	this.push = function(obj,handler){
-		if(!obj.SongPlayListID){
-			obj.SongPlayListID = this.stack.length;
-		}
 		this.stack.push(obj);
 		if(typeof handler === 'function'){
 			handler.apply(this);
 		}
 	};
 	
-	/* Pas d'utilisation pour l'instant
-	this.pop = function(handler){
+	// le splice (enlever des membres de l'array)
+	this.splice = function(index,howMany,handler){
+		this.stack.splice(index, howMany);
 		if(typeof handler === 'function'){
 			handler.apply(this);
 		}
-		return this.stack.pop();
 	};
-	*/
-	
-	// implémentation du forEach
-	// http://stackoverflow.com/questions/10466436/javascript-foreach-implementation
-	// on bind(this.stack) pour pouvoir reprendre le code en entier
-	this.forEach = function(fun){
-		var len = this.length;
-		if(typeof fun != 'function'){
-			throw new TypeError();
-		}
-		
-		var thisp = arguments[1];
-		for(var i =0; i<len;i++){
-			if(i in this){
-				fun.call(thisp,this[i],i,this);
-			}
-		}
-	}.bind(this.stack);
 }
