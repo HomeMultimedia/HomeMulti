@@ -82,7 +82,7 @@ public class ETSRemote {
 			return false;
 
 		//ICI on envoie l'id de la chanson que l'on va jouer pour actualiser le client
-		server.pushMessage(Const.ID,""+idPlaylist);
+		//server.pushMessage(Const.ID,""+idPlaylist);
 		if (this.streamingMode == true) {
 			String options = formatHttpStream(Const.IP, Const.STREAMING_PORT);
 			mediaPlayer.playMedia(mediaFolder.getFiles().get(songId).getMrl(),options);

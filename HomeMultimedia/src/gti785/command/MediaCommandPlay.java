@@ -12,13 +12,14 @@ public class MediaCommandPlay implements MediaCommand {
 	
 	public MediaCommandPlay(String arg){
 		this.remote = Contexte.getInstance().getRemote();
+		this.arg = arg;
 	}
 	
 	public void execute() throws Exception{
 		int idPlaylist = 0;
 		if (arg != null) {
 			idPlaylist = Integer.parseInt(arg);
-			response = PrintXML.printAfterPlay(""+idPlaylist);
+			//response = PrintXML.printAfterPlay(""+idPlaylist);
 		}
 		remote.play(idPlaylist);
 		

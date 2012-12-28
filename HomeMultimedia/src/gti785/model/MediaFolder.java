@@ -127,9 +127,8 @@ public class MediaFolder{
 					String poster = Const.ARTWORK_URL+album+".png";
 					int length = f.getAudioHeader().getTrackLength();
 					String mrl = file.toString();
-					String[] title = mrl.split("/");
-					title = mrl.split("\\");
-					
+					String title = file.getName();
+
 					if(!artwork.imageExist(album) && tag.getFirstArtwork() != null){
 						
 						BufferedImage img = (BufferedImage)tag.getFirstArtwork().getImage(); //error if no artwork
@@ -141,7 +140,7 @@ public class MediaFolder{
 					}
 					
 					//create new Media
-					Media media = new Media(i, title[title.length-1], album, length, mrl, poster);
+					Media media = new Media(i, title, album, length, mrl, poster);
 					
 					//add to list of media
 					files.add(media);
@@ -149,7 +148,7 @@ public class MediaFolder{
 				}
 			}
 			
-			System.out.println("test:" + files.get(0).getTitle());
+			//System.out.println("test:" + files.get(0).getTitle());
 			return this;
 		
 		} catch (CannotReadException e) {

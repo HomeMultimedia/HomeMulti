@@ -52,6 +52,7 @@ MediaCommand toDo = null;
 		
 		String command = null;
 		command = request.getParameter("command");
+		String option = "";
 		
 		//get all media list
 		if(command != null && command.equals("getList")){
@@ -60,8 +61,8 @@ MediaCommand toDo = null;
 		
 		//play song
 		else if(command != null && command.equals("play")){
-			String id = request.getParameter("option");
-			toDo = CommandFactory.getInstance().getMediaCommandPlay(id);
+			option = request.getParameter("option");
+			toDo = CommandFactory.getInstance().getMediaCommandPlay(option);
 		}
 		
 		//pause song
@@ -77,8 +78,8 @@ MediaCommand toDo = null;
 		
 		//add song to playlist
 		else if(command != null && command.equals("playlistadd")){
-			String idSong = request.getParameter("option");
-			toDo = CommandFactory.getInstance().getMediaCommandPlaylistAdd(idSong);
+			option = request.getParameter("option");
+			toDo = CommandFactory.getInstance().getMediaCommandPlaylistAdd(option);
 		}
 		
 		//remove song from playlist
@@ -125,14 +126,14 @@ MediaCommand toDo = null;
 		
 		//set volume
 		else if(command != null && command.equals("volume")){
-			String volume = request.getParameter("option");
-			toDo = CommandFactory.getInstance().getMediaCommandVolume(volume);
+			option = request.getParameter("option");
+			toDo = CommandFactory.getInstance().getMediaCommandVolume(option);
 		}
 		
 		//OpenFolder
 		else if(command != null && command.equals("openFolder")){
-			String file = request.getParameter("option");
-			toDo = CommandFactory.getInstance().getMediaCommandOpenFolder(file);
+			option = request.getParameter("option");
+			toDo = CommandFactory.getInstance().getMediaCommandOpenFolder(option);
 		}
 		
 		//UpFile
@@ -178,7 +179,7 @@ MediaCommand toDo = null;
 		catch(Exception e){//print errors
 			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 			response.getWriter().write(e.getMessage());
-			System.out.println(e.getMessage());
+			System.out.println("Method not allowed: "+e.getMessage());
 		}
 	}
 

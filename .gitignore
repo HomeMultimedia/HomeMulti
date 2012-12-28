@@ -13,3 +13,5 @@ HomeMultimedia/.project
 HomeMultimedia/WebContent/WEB-INF/*
 
 HomeMultimedia/WebContent/META-INF/*
+
+HomeMultimedia/src/gti785/param/Const.java
